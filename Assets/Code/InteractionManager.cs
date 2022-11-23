@@ -10,6 +10,7 @@ public class InteractionManager : MonoBehaviour
     private Camera mainCam;
     RigTools selectedTool;
     bool toolSelected = false;
+    Vector3 lastMousePos = Vector3.zero;
 
     private void Start()
     {
@@ -53,6 +54,7 @@ public class InteractionManager : MonoBehaviour
                 {
                     toolSelected = true;
                     selectedTool = rigTool;
+                    lastMousePos = TransformHelper();
                     selectedTool.MouseDown();
                 }
             }
@@ -75,10 +77,18 @@ public class InteractionManager : MonoBehaviour
 
     public void MouseMove(InputAction.CallbackContext context)
     {
-        //print(mainCam.ScreenToWorldPoint(context.ReadValue<Vector2>()));
         if (toolSelected)
         {
-            selectedTool.MouseMove(context.ReadValue<Vector2>());
+            Vector3 mousePos = TransformHelper();
+            selectedTool.MouseMove(mousePos - lastMousePos);
+            lastMousePos = mousePos;
         }
+    }
+
+    public Vector3 TransformHelper()
+    {
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = mainCam.WorldToScreenPoint(selectedTool.transform.position).z;
+        return mainCam.ScreenToWorldPoint(mousePos);
     }
 }

@@ -55,7 +55,7 @@ public class RigTools : MonoBehaviour
     private void UpdatePosition()
     {
         Vector3 cubePosition = cube.transform.position;
-        Vector3 toolPosition = transform.position;
+        Vector3 toolPosition = transform.parent.position;
         switch (axis)
         {
             case Axis.X:
@@ -76,6 +76,6 @@ public class RigTools : MonoBehaviour
         }
 
         cube.transform.position = cubePosition;
-        transform.position = toolPosition;
+        transform.parent.position = toolPosition;
     }
 }

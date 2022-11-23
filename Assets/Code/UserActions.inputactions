@@ -37,9 +37,9 @@
                 {
                     "name": "",
                     "id": "eb7f5d41-2629-4764-bd96-e82b5c3fb703",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=0.05,y=0.05)",
+                    "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
                     "action": "MouseMove",
                     "isComposite": false,
