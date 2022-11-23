@@ -34,11 +34,9 @@ public class InteractionManager : MonoBehaviour
 
     public void MouseClick(InputAction.CallbackContext context)
     {
-        print(context.ReadValue<float>());
         if (context.ReadValue<float>() > 0)
         {
             MouseDown();
-            print("down");
         }
         else
         {

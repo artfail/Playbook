@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RigTools : MonoBehaviour
 {
@@ -14,16 +15,26 @@ public class RigTools : MonoBehaviour
     Vector3 startPosition;
     private bool pressed;
 
+    private Transform[] rigTrans;
+
+    private void Start()
+    {
+        rigTrans = transform.parent.GetComponentsInChildren<Transform>();
+        rigTrans = rigTrans.Skip(1).ToArray();
+    }
+
     public void MouseDown()
     {
         pressed = true;
         startPosition = transform.localPosition;
+        ShowRig(false);
     }
 
     public void MouseUp()
     {
         pressed = false;
         transform.localPosition = startPosition;
+        ShowRig(true);
     }
 
 
@@ -130,5 +141,17 @@ public class RigTools : MonoBehaviour
 
         cube.transform.localScale = cubeScale;
         transform.localPosition = toolPosition;
+    }
+
+    void ShowRig(bool show)
+    {
+        foreach (Transform tool in rigTrans)
+        {
+            print(tool.name);
+            if (tool.gameObject != this.gameObject)
+            {
+                tool.gameObject.SetActive(show);
+            }
+        }
     }
 }
