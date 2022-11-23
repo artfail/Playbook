@@ -8,6 +8,8 @@ public class InteractionManager : MonoBehaviour
 
     public LayerMask clickMask;
     private Camera mainCam;
+    RigTools selectedTool;
+    bool toolSelected = false;
 
     private void Start()
     {
@@ -25,6 +27,10 @@ public class InteractionManager : MonoBehaviour
         {
             MouseDown();
         }
+        else
+        {
+            Deselect();
+        }
     }
 
     private void MouseDown()
@@ -36,17 +42,43 @@ public class InteractionManager : MonoBehaviour
             {
                 if (hit.collider.gameObject.TryGetComponent<ButtonAction>(out ButtonAction buttonAction))
                 {
-                    buttonAction.Clicked();
+                    buttonAction.MouseDown();
                     SpawnCube();
                 }
             }
+
+            else if (hit.collider.CompareTag("RigTool"))
+            {
+                if (hit.collider.gameObject.TryGetComponent<RigTools>(out RigTools rigTool))
+                {
+                    toolSelected = true;
+                    selectedTool = rigTool;
+                    selectedTool.MouseDown();
+                }
+            }
+            else
+            {
+                Deselect();
+            }
+        }
+    }
+
+    private void Deselect()
+    {
+        if (toolSelected)
+        {
+            selectedTool.MouseUp();
+            selectedTool = null;
+            toolSelected = false;
         }
     }
 
     public void MouseMove(InputAction.CallbackContext context)
     {
-        print(context.ReadValue<Vector2>());
+        //print(mainCam.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+        if (toolSelected)
+        {
+            selectedTool.MouseMove(context.ReadValue<Vector2>());
+        }
     }
-
-
 }

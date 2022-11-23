@@ -12,7 +12,7 @@ public class ButtonAction : MonoBehaviour
         buttonRenderer.material = buttonMats[0];
     }
 
-    public void Clicked()
+    public void MouseDown()
     {
         buttonRenderer.material = buttonMats[1];
         StartCoroutine(Unhighlight());
