@@ -12,6 +12,9 @@ public class InteractionManager : MonoBehaviour
     bool toolSelected = false;
     Vector3 lastMousePos = Vector3.zero;
 
+    public GameObject cubePrefab;
+    public GameObject rigPrefab;
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -19,14 +22,23 @@ public class InteractionManager : MonoBehaviour
 
     public void SpawnCube()
     {
-        print("spawn cube");
+        GameObject newCube = Instantiate(cubePrefab);
+        GameObject newRig = Instantiate(rigPrefab, newCube.transform.position, newCube.transform.rotation);
+
+        RigTools[] rigTools = newRig.GetComponentsInChildren<RigTools>();
+        foreach (RigTools tool in rigTools)
+        {
+            tool.cube = newCube;
+        }
     }
 
     public void MouseClick(InputAction.CallbackContext context)
     {
+        print(context.ReadValue<float>());
         if (context.ReadValue<float>() > 0)
         {
             MouseDown();
+            print("down");
         }
         else
         {

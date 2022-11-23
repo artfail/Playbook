@@ -15,7 +15,7 @@
                 },
                 {
                     "name": "MouseClick",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "61893b8e-9ba1-4e57-a83a-a0ec7e28cb22",
                     "expectedControlType": "Button",
                     "processors": "",
