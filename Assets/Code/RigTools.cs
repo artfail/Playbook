@@ -39,7 +39,7 @@ public class RigTools : MonoBehaviour
                 UpdatePosition();
                 break;
             case Change.Rotation:
-
+                UpdateRotation();
                 break;
 
             case Change.Scale:
@@ -76,6 +76,33 @@ public class RigTools : MonoBehaviour
 
         cube.transform.position = cubePosition;
         transform.parent.position = toolPosition;
+    }
+
+    private void UpdateRotation()
+    {
+        Quaternion cubeRotation = cube.transform.rotation;
+        Quaternion toolRotation = transform.parent.rotation;
+        switch (axis)
+        {
+            case Axis.X:
+                cubeRotation.x -= mouseDelta.x;
+                toolRotation.x -= mouseDelta.x;
+                break;
+            case Axis.Y:
+                cubeRotation.y -= mouseDelta.x;
+                toolRotation.y -= mouseDelta.x;
+                break;
+            case Axis.Z:
+                cubeRotation.z -= mouseDelta.x;
+                toolRotation.z -= mouseDelta.x;
+                break;
+            default:
+                print("no valid axis");
+                break;
+        }
+
+        cube.transform.rotation = cubeRotation;
+        transform.parent.rotation = toolRotation;
     }
 
     private void UpdateScale()
