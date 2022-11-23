@@ -96,8 +96,8 @@ public class RigTools : MonoBehaviour
         switch (axis)
         {
             case Axis.X:
-                cubeRotation.x -= mouseDelta.x;
-                toolRotation.x -= mouseDelta.x;
+                cubeRotation.x += mouseDelta.y;
+                toolRotation.x += mouseDelta.y;
                 break;
             case Axis.Y:
                 cubeRotation.y -= mouseDelta.x;
