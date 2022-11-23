@@ -10,21 +10,20 @@ public class RigTools : MonoBehaviour
     public Change change;
     public Axis axis;
     private Vector2 mouseDelta;
+
+    Vector3 startPosition;
     private bool pressed;
-
-    private void Start()
-    {
-
-    }
 
     public void MouseDown()
     {
         pressed = true;
+        startPosition = transform.localPosition;
     }
 
     public void MouseUp()
     {
         pressed = false;
+        transform.localPosition = startPosition;
     }
 
 
@@ -44,7 +43,7 @@ public class RigTools : MonoBehaviour
                 break;
 
             case Change.Scale:
-
+                UpdateScale();
                 break;
             default:
                 print("no valid transform");
@@ -77,5 +76,32 @@ public class RigTools : MonoBehaviour
 
         cube.transform.position = cubePosition;
         transform.parent.position = toolPosition;
+    }
+
+    private void UpdateScale()
+    {
+        Vector3 cubeScale = cube.transform.localScale;
+        Vector3 toolPosition = transform.localPosition;
+        switch (axis)
+        {
+            case Axis.X:
+                cubeScale.x -= mouseDelta.x;
+                toolPosition.x += mouseDelta.x;
+                break;
+            case Axis.Y:
+                cubeScale.y += mouseDelta.y;
+                toolPosition.y += mouseDelta.y;
+                break;
+            case Axis.Z:
+                cubeScale.z -= mouseDelta.x;
+                toolPosition.z += mouseDelta.x;
+                break;
+            default:
+                print("no valid axis");
+                break;
+        }
+
+        cube.transform.localScale = cubeScale;
+        transform.localPosition = toolPosition;
     }
 }
