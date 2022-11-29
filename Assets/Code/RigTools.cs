@@ -70,21 +70,18 @@ public class RigTools : MonoBehaviour
         Vector3 cubePosition = cube.transform.position;
         Vector3 toolPosition = transform.parent.position;
 
-
         Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
         Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
         Vector3 projecZ = Vector3.ProjectOnPlane(cube.transform.forward, camTrans.forward);
 
         float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
         float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
-
-        float aZ = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
-
+        float aZ1 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
+        float aZ2 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.right) * Mathf.Deg2Rad;
 
         Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
         Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
-
-        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.x + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.y);
+        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
 
 
         switch (axis)
