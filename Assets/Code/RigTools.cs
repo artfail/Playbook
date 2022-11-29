@@ -209,8 +209,8 @@ public class RigTools : MonoBehaviour
                 toolPosition.y += scaleDir[1];
                 break;
             case Axis.Z:
-                //cubeScale.z += scaleDir;
-                //toolPosition.z += scaleDir;
+                cubeScale.z += scaleDir[2];
+                toolPosition.z += scaleDir[2];
                 break;
             default:
                 print("no valid axis");
@@ -223,6 +223,18 @@ public class RigTools : MonoBehaviour
 
     Vector3[] GetMoveVectors()
     {
+        float[] scaleDir = GetScaleDir();
+
+        //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
+        Vector3 moveX = transform.parent.right * scaleDir[0];
+        Vector3 moveY = transform.parent.up * scaleDir[1];
+        Vector3 moveZ = transform.parent.forward * scaleDir[2];
+
+        return new Vector3[] { moveX, moveY, moveZ };
+    }
+
+    float[] GetScaleDir()
+    {
         //Project the transform vectors of movement onto a 2D plane using the camera as the normal
         Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
         Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
@@ -234,25 +246,11 @@ public class RigTools : MonoBehaviour
         float aZ1 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
         float aZ2 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.right) * Mathf.Deg2Rad;
 
-        //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
-        Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
-        Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
-        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
+        float scaleX = Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y;
+        float scaleY = Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x;
+        float scaleZ = Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x;
 
-        return new Vector3[] { moveX, moveY, moveZ };
-    }
-
-    float[] GetScaleDir()
-    {
-        Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
-        Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
-        float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
-        float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
-        print(Mathf.Round(Mathf.Cos(aX)) + ", " + Mathf.Round(Mathf.Sin(aY)));
-
-        float scaleX = (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x) - (Mathf.Round(Mathf.Sin(aY)) * mouseDelta.y);
-        float scaleY = (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y) + (Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
-        return new float[] { scaleX, scaleY };
+        return new float[] { scaleX, scaleY, scaleZ };
     }
 
     //When a tool is used this makes the rest of the rig semitransparent
