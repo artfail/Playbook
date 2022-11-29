@@ -109,34 +109,6 @@ public class RigTools : MonoBehaviour
 
         cube.transform.position = cubePosition;
         transform.parent.position = toolPosition;
-
-        /*
-        // World Space
-
-        Vector3 cubePosition = cube.transform.position;
-        Vector3 toolPosition = transform.parent.position;
-        switch (axis)
-        {
-            case Axis.X:
-                cubePosition.x += mouseDelta.x;
-                toolPosition.x += mouseDelta.x;
-                break;
-            case Axis.Y:
-                cubePosition.y += mouseDelta.y;
-                toolPosition.y += mouseDelta.y;
-                break;
-            case Axis.Z:
-                cubePosition.z += mouseDelta.x;
-                toolPosition.z += mouseDelta.x;
-                break;
-            default:
-                print("no valid axis");
-                break;
-        }
-
-        cube.transform.position = cubePosition;
-        transform.parent.position = toolPosition;
-        */
     }
 
     private void UpdateRotation()
@@ -161,42 +133,13 @@ public class RigTools : MonoBehaviour
                 print("no valid axis");
                 break;
         }
-
-
-        /*
-        // World Space
-
-        Quaternion cubeRotation = cube.transform.rotation;
-        Quaternion toolRotation = transform.parent.rotation;
-        switch (axis)
-        {
-            case Axis.X:
-                cubeRotation.x += mouseDelta.y;
-                toolRotation.x += mouseDelta.y;
-                break;
-            case Axis.Y:
-                cubeRotation.y -= mouseDelta.x;
-                toolRotation.y -= mouseDelta.x;
-                break;
-            case Axis.Z:
-                cubeRotation.z -= mouseDelta.x;
-                toolRotation.z -= mouseDelta.x;
-                break;
-            default:
-                print("no valid axis");
-                break;
-        }
-
-        cube.transform.rotation = cubeRotation;
-        transform.parent.rotation = toolRotation;
-        */
     }
 
     private void UpdateScale()
     {
         Vector3 cubeScale = cube.transform.localScale;
         Vector3 toolPosition = transform.localPosition;
-        float[] scaleDir = GetScaleDir();
+        float[] scaleDir = GetProjectedDelta();
 
         switch (axis)
         {
@@ -209,7 +152,7 @@ public class RigTools : MonoBehaviour
                 toolPosition.y += scaleDir[1];
                 break;
             case Axis.Z:
-                cubeScale.z += scaleDir[2];
+                cubeScale.z -= scaleDir[2];
                 toolPosition.z += scaleDir[2];
                 break;
             default:
@@ -223,7 +166,7 @@ public class RigTools : MonoBehaviour
 
     Vector3[] GetMoveVectors()
     {
-        float[] scaleDir = GetScaleDir();
+        float[] scaleDir = GetProjectedDelta();
 
         //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
         Vector3 moveX = transform.parent.right * scaleDir[0];
@@ -233,7 +176,7 @@ public class RigTools : MonoBehaviour
         return new Vector3[] { moveX, moveY, moveZ };
     }
 
-    float[] GetScaleDir()
+    float[] GetProjectedDelta()
     {
         //Project the transform vectors of movement onto a 2D plane using the camera as the normal
         Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
