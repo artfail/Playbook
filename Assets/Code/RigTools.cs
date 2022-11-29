@@ -64,6 +64,41 @@ public class RigTools : MonoBehaviour
 
     private void UpdatePosition()
     {
+        // Local Space
+        Transform camTrans = Camera.main.transform;
+
+        Vector3 cubePosition = cube.transform.position;
+        Vector3 toolPosition = transform.parent.position;
+
+        float a = Vector3.SignedAngle(cube.transform.right, camTrans.right, camTrans.forward);
+        Vector3 moveDelta = transform.forward * Mathf.Round(Mathf.Cos(a * Mathf.Deg2Rad)) * mouseDelta.x;
+        moveDelta -= transform.forward * Mathf.Round(Mathf.Sin(a * Mathf.Deg2Rad)) * mouseDelta.y;
+
+        switch (axis)
+        {
+            case Axis.X:
+                cubePosition -= moveDelta;
+                toolPosition -= moveDelta;
+                break;
+            case Axis.Y:
+                cubePosition.y += mouseDelta.y;
+                toolPosition.y += mouseDelta.y;
+                break;
+            case Axis.Z:
+                cubePosition.z += mouseDelta.x;
+                toolPosition.z += mouseDelta.x;
+                break;
+            default:
+                print("no valid axis");
+                break;
+        }
+
+        cube.transform.position = cubePosition;
+        transform.parent.position = toolPosition;
+
+        /*
+        // World Space
+
         Vector3 cubePosition = cube.transform.position;
         Vector3 toolPosition = transform.parent.position;
         switch (axis)
@@ -87,10 +122,36 @@ public class RigTools : MonoBehaviour
 
         cube.transform.position = cubePosition;
         transform.parent.position = toolPosition;
+        */
     }
 
     private void UpdateRotation()
     {
+        // Local Space
+        int speed = 20;
+        switch (axis)
+        {
+            case Axis.X:
+                cube.transform.Rotate(mouseDelta.y * speed, 0, 0, Space.Self);
+                transform.parent.Rotate(mouseDelta.y * speed, 0, 0, Space.Self);
+                break;
+            case Axis.Y:
+                cube.transform.Rotate(0, -mouseDelta.x * speed, 0, Space.Self);
+                transform.parent.Rotate(0, -mouseDelta.x * speed, 0, Space.Self);
+                break;
+            case Axis.Z:
+                cube.transform.Rotate(0, 0, -mouseDelta.x * speed, Space.Self);
+                transform.parent.Rotate(0, 0, -mouseDelta.x * speed, Space.Self);
+                break;
+            default:
+                print("no valid axis");
+                break;
+        }
+
+
+        /*
+        // World Space
+
         Quaternion cubeRotation = cube.transform.rotation;
         Quaternion toolRotation = transform.parent.rotation;
         switch (axis)
@@ -114,6 +175,7 @@ public class RigTools : MonoBehaviour
 
         cube.transform.rotation = cubeRotation;
         transform.parent.rotation = toolRotation;
+        */
     }
 
     private void UpdateScale()
@@ -147,7 +209,7 @@ public class RigTools : MonoBehaviour
     {
         foreach (Transform tool in rigTrans)
         {
-            print(tool.name);
+            //print(tool.name);
             if (tool.gameObject != this.gameObject)
             {
                 tool.gameObject.SetActive(show);
