@@ -1,3 +1,14 @@
+/*
+John Bruneau
+Nov 2020 (CC BY 3.0)
+
+The Interaction Manager, manages the button click and all the mouse actions.
+The mouse events are sent as Unity Events from the New Input System Action map.
+Mouse clicks are translated from 2D screen space to 3D world space via ScreenPointToRay.
+The mouse delta that this version of the New Input System returns is a bit buggy and unreliable
+so the interaction manager handles that as well.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

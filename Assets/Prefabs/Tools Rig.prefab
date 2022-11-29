@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1394717643500819551}
   - component: {fileID: 1394717643500819544}
   - component: {fileID: 1394717643500819545}
-  - component: {fileID: 1394717643500819550}
   - component: {fileID: 1394717643500819547}
+  - component: {fileID: 1394717643500819550}
   m_Layer: 6
   m_Name: Scale X
   m_TagString: RigTool
@@ -83,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1394717643500819550
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394717643500819548}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1394717643500819547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +98,22 @@ MonoBehaviour:
   cube: {fileID: 0}
   change: 2
   axis: 0
+  defaultMat: {fileID: 2100000, guid: 6a069edf91951804c936b4623af11030, type: 2}
+  transMat: {fileID: 2100000, guid: 3551e031901011043af0536a8734f582, type: 2}
+  mRenderer: {fileID: 0}
+--- !u!135 &1394717643500819550
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394717643500819548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1394717643608626568
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,8 +125,8 @@ GameObject:
   - component: {fileID: 1394717643608626571}
   - component: {fileID: 1394717643608626564}
   - component: {fileID: 1394717643608626565}
-  - component: {fileID: 1394717643608626570}
   - component: {fileID: 1394717643608626567}
+  - component: {fileID: 1394717643608626570}
   m_Layer: 6
   m_Name: Scale Y
   m_TagString: RigTool
@@ -194,19 +197,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1394717643608626570
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394717643608626568}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1394717643608626567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +212,22 @@ MonoBehaviour:
   cube: {fileID: 0}
   change: 2
   axis: 1
+  defaultMat: {fileID: 2100000, guid: dac736fc167726b448c01e3ea4daccd6, type: 2}
+  transMat: {fileID: 2100000, guid: f43a060bd17fd1e4f85ce10c2b23eef5, type: 2}
+  mRenderer: {fileID: 0}
+--- !u!135 &1394717643608626570
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394717643608626568}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1394717644734263019
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,8 +239,8 @@ GameObject:
   - component: {fileID: 1394717644734263018}
   - component: {fileID: 1394717644734263015}
   - component: {fileID: 1394717644734263012}
-  - component: {fileID: 1394717644734263013}
   - component: {fileID: 1394717644734263014}
+  - component: {fileID: 1394717644734263013}
   m_Layer: 6
   m_Name: Scale Z
   m_TagString: RigTool
@@ -305,19 +311,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1394717644734263013
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394717644734263019}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1394717644734263014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +326,22 @@ MonoBehaviour:
   cube: {fileID: 0}
   change: 2
   axis: 2
+  defaultMat: {fileID: 2100000, guid: bdaa648686e50594f87551dc063f5ed7, type: 2}
+  transMat: {fileID: 2100000, guid: a58f3b491d86db14aab07e9abf6abd39, type: 2}
+  mRenderer: {fileID: 0}
+--- !u!135 &1394717644734263013
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394717644734263019}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1394717644737986589
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +448,14 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f43a060bd17fd1e4f85ce10c2b23eef5, type: 2}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: dac736fc167726b448c01e3ea4daccd6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
 --- !u!4 &614283471744262611 stripped
@@ -509,6 +526,18 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 3551e031901011043af0536a8734f582, type: 2}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db2cfda9c4a3544b9db32affe32ea5a, type: 2}
+    - target: {fileID: 8753065483611639107, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db2cfda9c4a3544b9db32affe32ea5a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
 --- !u!4 &8820588200339437836 stripped
@@ -583,6 +612,14 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: f43a060bd17fd1e4f85ce10c2b23eef5, type: 2}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 77d44e078103d9f4d88634000d203ffa, type: 2}
     - target: {fileID: 8753065483611639107, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -661,6 +698,14 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a58f3b491d86db14aab07e9abf6abd39, type: 2}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: bdaa648686e50594f87551dc063f5ed7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
 --- !u!4 &614283473406403089 stripped
@@ -735,6 +780,14 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a58f3b491d86db14aab07e9abf6abd39, type: 2}
+    - target: {fileID: 7684883226455828165, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: e1d1e1af8cf14614199da56dd6cf90f1, type: 2}
     - target: {fileID: 8753065483611639107, guid: 86dbd548c007fc348becfb45c15eba21, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -805,6 +858,14 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: transMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 3551e031901011043af0536a8734f582, type: 2}
+    - target: {fileID: 4201615185945745068, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
+      propertyPath: defaultMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a069edf91951804c936b4623af11030, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fea4598dd53a347b65ffe9fb6dc9bc, type: 3}
 --- !u!4 &6082957228380367493 stripped

@@ -1,26 +1,44 @@
+/*
+John Bruneau
+Nov 2020 (CC BY 3.0)
+
+Rig Tools controls all the handle drag and drop actions for manipulating a Cube (or any generic game object)
+The Cube and the mouse events are assigned by the InteractionManager.CS
+The actions for which each tool represents can be set in the Inspector using Enum dropdown menus.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class RigTools : MonoBehaviour
 {
+    [HideInInspector]
     public GameObject cube;
     public enum Change { Position, Rotation, Scale };
     public enum Axis { X, Y, Z };
     public Change change;
     public Axis axis;
+    public Material defaultMat;
+    public Material transMat;
+
+    [HideInInspector]
+    public Renderer mRenderer;
     private Vector2 mouseDelta;
 
     Vector3 startPosition;
     private bool pressed;
 
-    private Transform[] rigTrans;
+    private RigTools[] allRigTools;
+    Transform camTrans;
 
     private void Start()
     {
-        rigTrans = transform.parent.GetComponentsInChildren<Transform>();
-        rigTrans = rigTrans.Skip(1).ToArray();
+        camTrans = Camera.main.transform;
+        mRenderer = GetComponent<Renderer>();
+        //defaultMat = mRenderer.material;
+
+        allRigTools = transform.parent.GetComponentsInChildren<RigTools>();
     }
 
     public void MouseDown()
@@ -65,20 +83,22 @@ public class RigTools : MonoBehaviour
     private void UpdatePosition()
     {
         // Local Space
-        Transform camTrans = Camera.main.transform;
 
         Vector3 cubePosition = cube.transform.position;
         Vector3 toolPosition = transform.parent.position;
 
+        //Project the transform vectors of movement onto a 2D plane using the camera as the normal
         Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
         Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
         Vector3 projecZ = Vector3.ProjectOnPlane(cube.transform.forward, camTrans.forward);
 
+        //Determine the angle and positive or negative rotation direction based on an axis
         float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
         float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
         float aZ1 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
         float aZ2 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.right) * Mathf.Deg2Rad;
 
+        //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
         Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
         Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
         Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
@@ -215,14 +235,21 @@ public class RigTools : MonoBehaviour
         transform.localPosition = toolPosition;
     }
 
+    //When a tool is used this makes the rest of the rig semitransparent
     void ShowRig(bool show)
     {
-        foreach (Transform tool in rigTrans)
+        foreach (RigTools tool in allRigTools)
         {
-            //print(tool.name);
             if (tool.gameObject != this.gameObject)
             {
-                tool.gameObject.SetActive(show);
+                if (show)
+                {
+                    tool.mRenderer.material = tool.defaultMat;
+                }
+                else
+                {
+                    tool.mRenderer.material = tool.transMat;
+                }
             }
         }
     }
