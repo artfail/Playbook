@@ -196,20 +196,21 @@ public class RigTools : MonoBehaviour
     {
         Vector3 cubeScale = cube.transform.localScale;
         Vector3 toolPosition = transform.localPosition;
+        float[] scaleDir = GetScaleDir();
 
         switch (axis)
         {
             case Axis.X:
-                cubeScale.x -= mouseDelta.x;
-                toolPosition.x += mouseDelta.x;
+                cubeScale.x -= scaleDir[0];
+                toolPosition.x += scaleDir[0];
                 break;
             case Axis.Y:
-                cubeScale.y += mouseDelta.y;
-                toolPosition.y += mouseDelta.y;
+                cubeScale.y += scaleDir[1];
+                toolPosition.y += scaleDir[1];
                 break;
             case Axis.Z:
-                cubeScale.z -= mouseDelta.x;
-                toolPosition.z += mouseDelta.x;
+                //cubeScale.z += scaleDir;
+                //toolPosition.z += scaleDir;
                 break;
             default:
                 print("no valid axis");
@@ -239,6 +240,19 @@ public class RigTools : MonoBehaviour
         Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
 
         return new Vector3[] { moveX, moveY, moveZ };
+    }
+
+    float[] GetScaleDir()
+    {
+        Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
+        Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
+        float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
+        float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
+        print(Mathf.Round(Mathf.Cos(aX)) + ", " + Mathf.Round(Mathf.Sin(aY)));
+
+        float scaleX = (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x) - (Mathf.Round(Mathf.Sin(aY)) * mouseDelta.y);
+        float scaleY = (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y) + (Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
+        return new float[] { scaleX, scaleY };
     }
 
     //When a tool is used this makes the rest of the rig semitransparent
