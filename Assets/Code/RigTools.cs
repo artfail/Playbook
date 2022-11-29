@@ -70,23 +70,36 @@ public class RigTools : MonoBehaviour
         Vector3 cubePosition = cube.transform.position;
         Vector3 toolPosition = transform.parent.position;
 
-        float a = Vector3.SignedAngle(cube.transform.right, camTrans.right, camTrans.forward);
-        Vector3 moveDelta = transform.forward * Mathf.Round(Mathf.Cos(a * Mathf.Deg2Rad)) * mouseDelta.x;
-        moveDelta -= transform.forward * Mathf.Round(Mathf.Sin(a * Mathf.Deg2Rad)) * mouseDelta.y;
+
+        Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
+        Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
+        Vector3 projecZ = Vector3.ProjectOnPlane(cube.transform.forward, camTrans.forward);
+
+        float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
+        float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
+
+        float aZ = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
+
+
+        Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
+        Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
+
+        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.x + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.y);
+
 
         switch (axis)
         {
             case Axis.X:
-                cubePosition -= moveDelta;
-                toolPosition -= moveDelta;
+                cubePosition += moveX;
+                toolPosition += moveX;
                 break;
             case Axis.Y:
-                cubePosition.y += mouseDelta.y;
-                toolPosition.y += mouseDelta.y;
+                cubePosition += moveY;
+                toolPosition += moveY;
                 break;
             case Axis.Z:
-                cubePosition.z += mouseDelta.x;
-                toolPosition.z += mouseDelta.x;
+                cubePosition += moveZ;
+                toolPosition += moveZ;
                 break;
             default:
                 print("no valid axis");
