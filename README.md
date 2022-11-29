@@ -6,3 +6,6 @@ Attribution 3.0 Unported (CC BY 3.0) (https://creativecommons.org/licenses/by/3.
 
 To Run:
 Download the repo and open the root folder in Unity. In Unity, open the "Main" scene under Assets/Scenes.
+
+Instructions:
+Click the Orange 3D button to generate a Cube. The Cube has 3 handles for each axis. Cone: Position, Sphere: Scale, Ring: Rotate. The handles can be dragged with the mouse to manipulate their respective transform property.
