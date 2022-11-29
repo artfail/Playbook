@@ -86,37 +86,21 @@ public class RigTools : MonoBehaviour
 
         Vector3 cubePosition = cube.transform.position;
         Vector3 toolPosition = transform.parent.position;
-
-        //Project the transform vectors of movement onto a 2D plane using the camera as the normal
-        Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
-        Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
-        Vector3 projecZ = Vector3.ProjectOnPlane(cube.transform.forward, camTrans.forward);
-
-        //Determine the angle and positive or negative rotation direction based on an axis
-        float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
-        float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
-        float aZ1 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
-        float aZ2 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.right) * Mathf.Deg2Rad;
-
-        //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
-        Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
-        Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
-        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
-
+        Vector3[] moveVectors = GetMoveVectors();
 
         switch (axis)
         {
             case Axis.X:
-                cubePosition += moveX;
-                toolPosition += moveX;
+                cubePosition += moveVectors[0];
+                toolPosition += moveVectors[0];
                 break;
             case Axis.Y:
-                cubePosition += moveY;
-                toolPosition += moveY;
+                cubePosition += moveVectors[1];
+                toolPosition += moveVectors[1];
                 break;
             case Axis.Z:
-                cubePosition += moveZ;
-                toolPosition += moveZ;
+                cubePosition += moveVectors[2];
+                toolPosition += moveVectors[2];
                 break;
             default:
                 print("no valid axis");
@@ -212,6 +196,7 @@ public class RigTools : MonoBehaviour
     {
         Vector3 cubeScale = cube.transform.localScale;
         Vector3 toolPosition = transform.localPosition;
+
         switch (axis)
         {
             case Axis.X:
@@ -233,6 +218,27 @@ public class RigTools : MonoBehaviour
 
         cube.transform.localScale = cubeScale;
         transform.localPosition = toolPosition;
+    }
+
+    Vector3[] GetMoveVectors()
+    {
+        //Project the transform vectors of movement onto a 2D plane using the camera as the normal
+        Vector3 projecX = Vector3.ProjectOnPlane(cube.transform.right, camTrans.forward);
+        Vector3 projecY = Vector3.ProjectOnPlane(cube.transform.up, camTrans.forward);
+        Vector3 projecZ = Vector3.ProjectOnPlane(cube.transform.forward, camTrans.forward);
+
+        //Determine the angle and positive or negative rotation direction based on an axis
+        float aX = Vector3.SignedAngle(projecX, camTrans.right, camTrans.forward) * Mathf.Deg2Rad;
+        float aY = Vector3.SignedAngle(projecY, camTrans.up, camTrans.forward) * Mathf.Deg2Rad;
+        float aZ1 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.up) * Mathf.Deg2Rad;
+        float aZ2 = Vector3.SignedAngle(projecZ, camTrans.forward, camTrans.right) * Mathf.Deg2Rad;
+
+        //Turn the angle into a 1,-1 or 0 scaler for each axis using trig functions and rounding to the nearest int.
+        Vector3 moveX = transform.parent.right * (Mathf.Round(Mathf.Cos(aX)) * mouseDelta.x - Mathf.Round(Mathf.Sin(aX)) * mouseDelta.y);
+        Vector3 moveY = transform.parent.up * (Mathf.Round(Mathf.Cos(aY)) * mouseDelta.y + Mathf.Round(Mathf.Sin(aY)) * mouseDelta.x);
+        Vector3 moveZ = transform.parent.forward * (Mathf.Round(Mathf.Sin(aZ2)) * mouseDelta.y - Mathf.Round(Mathf.Sin(aZ1)) * mouseDelta.x);
+
+        return new Vector3[] { moveX, moveY, moveZ };
     }
 
     //When a tool is used this makes the rest of the rig semitransparent
